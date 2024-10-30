@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import TripCard from "../components/TripCard";
+import ReactLoading from "react-loading";
 function Home() {
   const [search, setSearch] = useState("");
   const [dataTrips, setDataTrips] = useState([]);
+  const [loading, setLoding] = useState(false);
   // console.log(dataTrips);
 
   async function getDateTrips() {
     try {
+      setLoding(true);
       const res = await axios.get(
         `http://localhost:4001/trips?keywords=${search}`
       );
       setDataTrips(res.data.data);
+      // setLoding(false);
       //   console.log(res.data.data);
-    } catch (error) {}
+    } catch (error) {
+      setLoding(true);
+    }
   }
   useEffect(() => {
     getDateTrips();
@@ -40,11 +46,26 @@ function Home() {
         <main className="max-w-7xl mx-auto px-4 py-6 ">
           {/* สร้าง components ใหม่ที่หน้า TrioCart เพื่อ map และส่ง props ไป */}
           <>
-            <div className="flex flex-col w-full ">
-              {dataTrips.map((trips) => (
-                <TripCard trips={trips} setSearch={setSearch} search={search} />
-              ))}
-            </div>
+            {loading ? (
+              <div className="flex flex-col w-full ">
+                {dataTrips.map((trips) => (
+                  <TripCard
+                    trips={trips}
+                    setSearch={setSearch}
+                    search={search}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="flex justify-center w-full">
+                <ReactLoading
+                  type={"bars"}
+                  color={"black"}
+                  height={667}
+                  width={375}
+                />
+              </div>
+            )}
           </>
         </main>
       </div>
