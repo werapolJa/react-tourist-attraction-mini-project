@@ -4,7 +4,7 @@ import TripCard from "../components/TripCard";
 function Home() {
   const [search, setSearch] = useState("");
   const [dataTrips, setDataTrips] = useState([]);
-  console.log(dataTrips);
+  // console.log(dataTrips);
 
   async function getDateTrips() {
     try {
@@ -21,7 +21,7 @@ function Home() {
   return (
     <>
       <div className=" bg-white mt-32">
-        <header className="max-w-3xl mx-auto ">
+        <header className="max-w-3xl md:mx-auto mx-10">
           <h1 className=" text-4xl my-4  font-bold text-sky-500 text-center">
             เที่ยวไหนดี
           </h1>
@@ -29,6 +29,7 @@ function Home() {
             <label htmlFor="">ค้นหาที่เที่ยว</label>
             <input
               type="search"
+              value={search}
               placeholder="หาที่เที่ยวแล้วไปกัน..."
               className="w-full pl-10 focus:outline-none text-center border-0"
               onChange={(event) => setSearch(event.target.value)}
@@ -41,7 +42,7 @@ function Home() {
           <>
             <div className="flex flex-col w-full ">
               {dataTrips.map((trips) => (
-                <TripCard trips={trips} />
+                <TripCard trips={trips} setSearch={setSearch} search={search} />
               ))}
             </div>
           </>
