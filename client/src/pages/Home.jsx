@@ -12,7 +12,7 @@ function Home() {
     try {
       setLoding(true);
       const res = await axios.get(
-        `http://localhost:4001/trips?keywords=${search}`
+        `https://react-tourist-attraction-mini-project-mbpr.vercel.app/trips?keywords=${search}`
       );
       setDataTrips(res.data.data);
       // setLoding(false);
